@@ -7,46 +7,69 @@ const presets = {
   },
 
   rect({x, y, width, height, transform, style}) {
-    return <rect {...{style, transform, width, height, x: x - width / 2, y}}/>
+    return <rect {...{style, transform, width, height, x, y}}/>
+  },
+
+  triangle({width, height, transform, style}){
+    return <path {...{style, transform}} d={`M0 0 L${width/2} ${height} L-${width/2} ${height} Z`}/>
   }
 };
 
 
-function getPositionProps(props) {
-  const {angle, center, radius, height, width} = props;
-  const posY = (radius != null ? center - radius : height != null ? height : width);
+function getTransformation( {angle, center, radius}) {
   return {
-    x: center,
-    y: posY,
-    cx: center,
-    cy: posY,
-    transform: `rotate(${angle} ${center} ${center})`
+    transform: `rotate(${angle} ${center} ${center}) translate(${center} ${center - (radius || center)}) `
   }
 }
 
-function limitedProps({center, knobSize, angle, value, ...rest}, {width}) {
-  if (width) {
-    rest.x -= width / 2;
+function getPosition({type, props:{r, ry, width}}) {
+  switch (type) {
+  case 'ellipse': {
+    return {
+      cx: 0,
+      cy: ry
+    };
   }
-  return rest;
+  case 'circle':
+    return {
+      cx: 0,
+      cy: r
+    };
+  case 'rect': {
+    return {
+      x: -width / 2,
+      y: 0
+    };
+  }
+  default : {
+    return {
 
+    }
+  }
+  }
+}
+
+function limitedProps({center, knobSize, angle, value, ...rest}) {
+  return rest;
 }
 
 function Pointer(props) {
-  const positionProps = getPositionProps(props);
-  const extendedProps = Object.assign(positionProps, props);
 
+  const propsWithTransformation = getTransformation(props);
   if (props.children) {
     return <g>{React.Children.map(props.children, c => {
       if (typeof c.type === 'string') {
-        return React.cloneElement(c, limitedProps(extendedProps, c.props));
+        const propsWithPosition = getPosition(c);
+        return React.cloneElement(c, Object.assign(propsWithPosition, propsWithTransformation));
       } else {
-        return React.cloneElement(c, extendedProps)
+        return React.cloneElement(c, Object.assign(propsWithTransformation, props));
       }
     })}</g>
   } else {
     const {type = 'circle'} = props;
-    return presets[type](extendedProps);
+    const propsWithPosition = getPosition({type, props});
+    const prop = Object.assign(propsWithPosition, propsWithTransformation, limitedProps(props));
+    return presets[type](prop);
   }
 }
 

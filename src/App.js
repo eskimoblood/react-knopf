@@ -5,9 +5,9 @@ import Pointer from './Pointer'
 import Scale from './Scale';
 
 
-function Circle({center, transform, value, r, green, cx, cy}) {
+function Circle({transform, value, r, green}) {
   return <circle
-    {...{r, cx, cy, transform}} fill={`rgb(${Math.floor(value)}, ${green}, 0)`}/>
+    {...{r, transform}} fill={`hsl(${value}, 100%, 50%)`}/>
 }
 
 class App extends Component {
@@ -19,13 +19,16 @@ class App extends Component {
           style={{background: 'white'} }
           onChange={console.log.bind(console, 'value: ')}>
 
-          <Pointer radius="30">
-            <rect fill="lime" width="1" height="20"/>
+          <Pointer radius="50" type="rect" width="6" height="20">
+            {/*<rect width={10} height={10}></rect>*/}
+            {/*<Circle green="100" r="10"></Circle>*/}
+            {/*<circle r="1"></circle>*/}
+            {/*<path d="M0 0 L10 20 L-10 20 Z" fill="#1abc9c" stroke="#95a5a6"/>*/}
           </Pointer>
           <Scale
             angleRange="360"
-            steps="10"
-            tickWidth="1"
+            steps="30"
+            tickWidth="0.5"
             tickHeight="3"
           />
         </Knob>
