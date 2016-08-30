@@ -18,6 +18,7 @@ function getTick(i, step, props,) {
   const angle = +(props.angleRange || 0) + i * step;
   const {center} = props;
   return <rect
+    key={i}
     width={props.tickWidth}
     height={props.tickHeight}
     x={center}
