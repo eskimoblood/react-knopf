@@ -3,6 +3,7 @@ import './App.css';
 import Knob from './Knob'
 import Pointer from './Pointer'
 import Scale from './Scale';
+import Arc from './Arc';
 
 
 function Circle({transform, value, r, green}) {
@@ -17,8 +18,12 @@ class App extends Component {
         <Knob
           size="100"
           style={{background: 'white'} }
-          onChange={console.log.bind(console, 'value: ')}>
+          onChange={console.log.bind(console, 'value: ')}
+          angleOffset={220}
+          angleRange={280}
+        >
 
+          <Arc/>
           <Pointer radius="50" type="rect" width="6" height="20">
             {/*<rect width={10} height={10}></rect>*/}
             {/*<Circle green="100" r="10"></Circle>*/}

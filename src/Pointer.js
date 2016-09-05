@@ -2,54 +2,52 @@ import React from 'react';
 
 
 const presets = {
-  circle({transform, width: r, cx, cy, style}) {
-    return <circle {...{r, style, transform, cx, cy}}/>
+  circle({ transform, width: r, cx, cy, style }) {
+    return <circle {...{ r, style, transform, cx, cy }} />
   },
 
-  rect({x, y, width, height, transform, style}) {
-    return <rect {...{style, transform, width, height, x, y}}/>
+  rect({ x, y, width, height, transform, style }) {
+    return <rect {...{ style, transform, width, height, x, y }} />
   },
 
-  triangle({width, height, transform, style}){
-    return <path {...{style, transform}} d={`M0 0 L${width/2} ${height} L-${width/2} ${height} Z`}/>
+  triangle({ width, height, transform, style }){
+    return <path {...{ style, transform }} d={`M0 0 L${width / 2} ${height} L-${width / 2} ${height} Z`} />
   }
 };
 
 
-function getTransformation( {angle, center, radius}) {
+function getTransformation({ angle, angleOffset, center, radius }) {
   return {
     transform: `rotate(${angle} ${center} ${center}) translate(${center} ${center - (radius || center)}) `
   }
 }
 
-function getPosition({type, props:{r, ry, width}}) {
+function getPosition({ type, props:{ r, ry, width } }) {
   switch (type) {
-  case 'ellipse': {
-    return {
-      cx: 0,
-      cy: ry
-    };
-  }
-  case 'circle':
-    return {
-      cx: 0,
-      cy: r
-    };
-  case 'rect': {
-    return {
-      x: -width / 2,
-      y: 0
-    };
-  }
-  default : {
-    return {
-
+    case 'ellipse': {
+      return {
+        cx: 0,
+        cy: ry
+      };
     }
-  }
+    case 'circle':
+      return {
+        cx: 0,
+        cy: r
+      };
+    case 'rect': {
+      return {
+        x: -width / 2,
+        y: 0
+      };
+    }
+    default : {
+      return {}
+    }
   }
 }
 
-function limitedProps({center, knobSize, angle, value, ...rest}) {
+function limitedProps({ center, knobSize, angle, value, ...rest }) {
   return rest;
 }
 
@@ -66,8 +64,8 @@ function Pointer(props) {
       }
     })}</g>
   } else {
-    const {type = 'circle'} = props;
-    const propsWithPosition = getPosition({type, props});
+    const { type = 'circle' } = props;
+    const propsWithPosition = getPosition({ type, props });
     const prop = Object.assign(propsWithPosition, propsWithTransformation, limitedProps(props));
     return presets[type](prop);
   }

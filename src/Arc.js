@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 function Arc(props) {
-  const startAngle = (props.angleOffset || 0) - 90;
+  const startAngle = props.angleOffset - 90;
   const outerRadius = props.outerRadius || props.center;
-  const innerRadius = props.innerRadius || props.center - props.width;
+  const innerRadius = props.innerRadius || props.center - props.knobSize / 20;
   const startAngleDegree = toRad(startAngle);
-  const endAngleDegree = toRad(startAngle + props.angle);
+  const endAngleDegree = toRad(props.angle - 90);
+
 
   const p1 = pointOnCircle(props.center, outerRadius, endAngleDegree);
   const p2 = pointOnCircle(props.center, outerRadius, startAngleDegree);
   const p3 = pointOnCircle(props.center, innerRadius, startAngleDegree);
   const p4 = pointOnCircle(props.center, innerRadius, endAngleDegree);
-  const largeArcFlag = ( props.angle < 180 ? 0 : 1);
+  const largeArcFlag = ( (props.angle - props.angleOffset) < 180 ? 0 : 1);
 
   const moveToP1 = moveTo(p1);
   const arcToP2 = arcTo(p2, outerRadius, largeArcFlag, 0);
@@ -19,7 +20,7 @@ function Arc(props) {
   const arcToP4 = arcTo(p4, innerRadius, largeArcFlag, 1);
   const lineToP1 = lineTo(p1);
 
-  return <path d={`${moveToP1} ${arcToP2} ${lineToP3} ${arcToP4} ${lineToP1}`}/>;
+  return <path d={`${moveToP1} ${arcToP2} ${lineToP3} ${arcToP4} ${lineToP1}`} />;
 }
 
 function moveTo(p) {
@@ -43,6 +44,15 @@ function pointOnCircle(center, radius, angle) {
     x: center + radius * Math.cos(angle),
     y: center + radius * Math.sin(angle)
   };
+}
+
+Arc.propTypes = {
+  outerRadius: PropTypes.number,
+  innerRadius: PropTypes.number,
+  center: PropTypes.number,
+  angle: PropTypes.number,
+  angleOffset: PropTypes.number,
+  knobSize: PropTypes.number
 }
 
 export default Arc;
