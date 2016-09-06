@@ -53,6 +53,6 @@ Arc.propTypes = {
   angle: PropTypes.number,
   angleOffset: PropTypes.number,
   knobSize: PropTypes.number
-}
+};
 
 export default Arc;

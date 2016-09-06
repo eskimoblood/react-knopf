@@ -51,14 +51,14 @@ class Knob extends Component {
     )
   }
 }
+
 Knob.propTypes = {
   size: PropTypes.number,
   angleOffset: PropTypes.number,
   angleRange: PropTypes.number,
   min: PropTypes.number,
   max: PropTypes.number
-}
-
+};
 
 Knob.defaultProps = {
   size: 100,
