@@ -1,10 +1,7 @@
 import React, { PropTypes }from 'react';
+import { getPosition, presets, getTransformation, limitedProps, normalizeProps } from './util'
 
-function Scale(props) {
-  return <g> {getTicks(props)} </g>
-}
-
-function getTicks(props) {
+function getScaleTicks(props) {
   const step = props.angleRange / props.steps;
   const end = props.steps + (props.angleRange === 360 ? 0 : 1);
   const ticks = [];
@@ -14,17 +11,25 @@ function getTicks(props) {
   return ticks;
 }
 
-function getTick(i, step, props,) {
-  const angle = props.angleOffset + i * step -180;
-  const { center } = props;
-  return <rect
-    key={i}
-    width={props.tickWidth}
-    height={props.tickHeight}
-    x={center}
-    y={props.knobSize - props.tickHeight}
-    transform={`rotate(${angle} ${center} ${center})`}
-  style={props.style}/>
+
+function getTick(i, step, props) {
+  const angle = props.angleOffset + i * step;
+  const propsWithTransformation = getTransformation(Object.assign({}, props, { angle }));
+
+  if (props.children) {
+    return null
+  } else {
+    const { type = 'circle' } = (props);
+    const normalizedProps = normalizeProps(props);
+    const propsWithPosition = getPosition({ type, props: normalizedProps });
+    const prop = Object.assign(normalizedProps, propsWithPosition, propsWithTransformation, limitedProps(props));
+    return presets[type](prop);
+  }
+}
+
+
+function Scale(props) {
+  return <g> {getScaleTicks(props)} </g>
 }
 
 Scale.propTypes = {
@@ -43,4 +48,5 @@ Scale.defaultProps = {
   tickWidth: 1,
   tickHeight: 5,
 };
+
 export default Scale;
