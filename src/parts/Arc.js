@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { toRad, arcTo, lineTo, moveTo, pointOnCircle } from './arcUtils';
+import { toRad, arcTo, lineTo, moveTo, pointOnCircle } from '../utils/arcUtils';
 
 function Arc(props) {
   const startAngle = props.angleOffset - 90;

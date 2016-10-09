@@ -1,18 +1,13 @@
 import React, { PropTypes } from 'react';
 import Knob from '../Knob'
-import Pointer from '../Pointer'
-import Scale from '../Scale';
+import Pointer from '../parts/Pointer'
+import Scale from '../parts/Scale';
+import { knobProps } from '../utils/util';
 
 function P4(props) {
   const { tickWidth } = props;
   return (
-    <Knob
-      size={props.size}
-      onChange={props.onChange}
-      angleOffset={props.angleOffset}
-      angleRange={props.angleRange}
-      snapDistance={props.snapDistance}
-    >
+    <Knob  {...knobProps(props)}>
       <filter
         id="blur"
         width={tickWidth * 2}

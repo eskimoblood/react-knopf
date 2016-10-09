@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import Knob from '../Knob'
-import Pointer from '../Pointer'
-import { toRad, arcTo, lineTo, moveTo, pointOnCircle } from '../arcUtils';
+import Pointer from '../parts/Pointer'
+import { toRad, arcTo, moveTo, pointOnCircle } from '../utils/arcUtils';
+import { knobProps } from '../utils/util';
 
 const stepSize = 50;
 const colorStep = 255 / stepSize;
@@ -45,17 +46,11 @@ function pathStep(props, e, i) {
 }
 function P5(props) {
   return (
-    <Knob
-      size={props.size}
-      onChange={props.onChange}
-      angleOffset={props.angleOffset}
-      angleRange={props.angleRange}
-      snapDistance={props.snapDistance}
-    >
+    <Knob  {...knobProps(props)}>
       <g fill="none" strokeWidth={props.strokeWidth}>
         {(Array.from({ length: stepSize }, pathStep.bind(null, props)))}
       </g>
-      <Pointer color={props.color} r={props.strokeWidth} fill={props.color}/>
+      <Pointer color={props.color} r={props.strokeWidth} fill={props.color} />
     </Knob>
   );
 }

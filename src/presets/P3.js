@@ -1,17 +1,12 @@
 import React, { PropTypes } from 'react';
 import Knob from '../Knob'
-import Arc from '../Arc';
+import Arc from '../parts/Arc';
 
+import { knobProps } from '../utils/util';
 function P3(props) {
   const innerRadius = props.size / 2 - props.strokeWidth;
   return (
-    <Knob
-      size={props.size}
-      onChange={props.onChange}
-      angleOffset={props.angleOffset}
-      angleRange={props.angleRange}
-      snapDistance={props.snapDistance}
-    >
+    <Knob  {...knobProps(props)}>
       <filter id='inner-shadow'>
 
         <feOffset

@@ -1,13 +1,32 @@
 import React, { Component, PropTypes } from 'react';
-import { positionToAngle, degreeToPercent, getStartPosition, limitAngleTo360Degree } from './util'
+import { positionToAngle, degreeToPercent, getStartPosition, limitAngleTo360Degree } from './utils/util';
+
 class Knob extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { angle: 0, value: props.value || 0 };
+
+    this.setInitialState(props);
     this.start = this.start.bind(this);
     this.addPropsToChild = this.addPropsToChild.bind(this);
     this.setContainer = (c)=> this.c = c;
+  }
+
+  getInitialValue({ value, defaultValue, min }) {
+    if (value != null) {
+      return value;
+    } else if (defaultValue != null) {
+      return defaultValue;
+    } else {
+      return min;
+    }
+  }
+
+  setInitialState(props) {
+    const value = this.getInitialValue(props);
+    const percent = this.snap(1 / (props.max - props.min) * value);
+    const angle = props.angleOffset + percent * props.angleRange;
+    this.state = { value, angle, percent };
   }
 
   start() {
@@ -40,7 +59,10 @@ class Knob extends Component {
     const value = this.props.min + (this.props.max - this.props.min) * percent;
 
     this.props.onChange(value);
-    this.setState({ angle: this.props.angleOffset + percent * this.props.angleRange, value, percent });
+
+    if (this.props.defaultValue != null) {
+      this.setState({ angle: this.props.angleOffset + percent * this.props.angleRange, value, percent });
+    }
   }
 
   addPropsToChild(child) {
@@ -79,7 +101,9 @@ Knob.propTypes = {
   angleRange: PropTypes.number,
   min: PropTypes.number,
   max: PropTypes.number,
-  snapDistance: PropTypes.number
+  snapDistance: PropTypes.number,
+  value: PropTypes.number,
+  defaultValue: PropTypes.number,
 };
 
 Knob.defaultProps = {
@@ -90,6 +114,5 @@ Knob.defaultProps = {
   max: 100,
   onChange: (e)=>e
 };
-
 
 export default Knob;

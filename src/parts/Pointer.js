@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { getPosition, presets, getTransformation, limitedProps } from './util'
+import { getPosition, presets, getTransformation, limitedProps, normalizeProps } from '../utils/util';
 
 function Pointer(props) {
 
@@ -14,9 +14,10 @@ function Pointer(props) {
       }
     })}</g>
   } else {
-    const { type } = props;
-    const propsWithPosition = getPosition({ type, props });
-    const prop = Object.assign(propsWithPosition, propsWithTransformation, limitedProps(props));
+    const { type = 'circle' } = (props);
+    const normalizedProps = normalizeProps(props);
+    const propsWithPosition = getPosition({ type, props: normalizedProps });
+    const prop = Object.assign(normalizedProps, propsWithPosition, propsWithTransformation, limitedProps(props));
     return presets[type](prop);
   }
 }
@@ -25,8 +26,6 @@ Pointer.propTypes = {
   type: PropTypes.string
 };
 
-Pointer.defaultProps = {
-  type: 'circle'
-};
+Pointer.defaultProps = {};
 
 export default Pointer;

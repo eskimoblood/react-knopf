@@ -9,21 +9,24 @@ class App extends Component {
         <P1
           color="#5ca8f5"
           background="#4b4f5b"
+          defaultValue={10}
         />
-
         <P2
           color="#5ca8f5"
           background="#4b4f5b"
+          defaultValue={10}
         />
         <P3
           color="#5ca8f5"
           background="#4b4f5b"
           strokeWidth={5}
+          defaultValue={10}
         />
         <P4
           color="#5ca8f5"
           background="#4b4f5b"
           tickWidth={1.3}
+          defaultValue={10}
         />
         <P5
         />

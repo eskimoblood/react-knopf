@@ -61,6 +61,7 @@ export const presets = {
 export function normalizeProps(props) {
   return {
     r: props.r || props.width || props.tickWidth,
+    ry: props.ry || props.r || props.width || props.tickWidth,
     width: props.width || props.tickWidth,
     height: props.height || props.tickHeight
   }
@@ -77,7 +78,7 @@ export function getPosition({ type, props:{ r, ry, width } }) {
     case 'circle':
       return {
         cx: 0,
-        cy: r
+        cy: r != null ? r : width
       };
     case 'rect': {
       return {
@@ -99,4 +100,8 @@ export function getTransformation({ angle, center, radius }) {
 
 export function limitedProps({ center, knobSize, angle, value, ...rest }) {
   return rest;
+}
+
+export function knobProps({ size, angleOffset, angleRange, min, max, value, defaultValue, snapDistance }) {
+  return { size, angleOffset, angleRange, min, max, value, defaultValue, snapDistance }
 }

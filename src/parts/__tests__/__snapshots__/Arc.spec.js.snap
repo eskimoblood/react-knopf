@@ -1,0 +1,13 @@
+exports[`Arc renders correctly for large angels 1`] = `
+<path
+  d="M-98.4807753012208,17.364817766693026 A100,100 0 1 0 6.123233995736766e-15,-100 L5.5109105961630896e-15,-90 A90,90 0 1 1 -88.63269777109872,15.628335990023725 L-98.4807753012208,17.364817766693026"
+  fill="lime"
+  filter="filter1" />
+`;
+
+exports[`Arc renders correctly for small angels 1`] = `
+<path
+  d="M100,0 A100,100 0 0 0 6.123233995736766e-15,-100 L5.5109105961630896e-15,-90 A90,90 0 0 1 90,0 L100,0"
+  fill="lime"
+  filter="filter1" />
+`;

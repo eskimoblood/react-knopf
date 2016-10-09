@@ -1,18 +1,12 @@
 import React, { PropTypes } from 'react';
-import Knob from '../Knob'
-import Pointer from '../Pointer'
-
+import Knob from '../Knob';
+import Pointer from '../parts/Pointer';
+import { knobProps } from '../utils/util';
 function P2(props) {
   const center = props.size / 2;
   const radius = center - props.strokeWidth / 2;
   return (
-    <Knob
-      size={props.size}
-      onChange={props.onChange}
-      angleOffset={props.angleOffset}
-      angleRange={props.angleRange}
-      snapDistance={props.snapDistance}
-    >
+    <Knob  {...knobProps(props)}>
       <circle
         r={radius}
         cx={center}

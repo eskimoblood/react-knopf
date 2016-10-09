@@ -1,17 +1,11 @@
 import React, { PropTypes } from 'react';
-import Knob from '../Knob'
-import Pointer from '../Pointer'
-import Arc from '../Arc';
-
+import Knob from '../Knob';
+import Pointer from '../parts/Pointer';
+import Arc from '../parts/Arc';
+import { knobProps } from '../utils/util';
 function P1(props) {
   return (
-    <Knob
-      size={props.size}
-      onChange={props.onChange}
-      angleOffset={props.angleOffset}
-      angleRange={props.angleRange}
-      snapDistance={props.snapDistance}
-    >
+    <Knob  {...knobProps(props)}>
       <Arc fill={props.background} angle={props.angleOffset + props.angleRange} />
       <Arc fill={props.color} />
       <Pointer style={{ fill: props.color }} type="rect" width={props.size / 15} height={props.size / 3}>

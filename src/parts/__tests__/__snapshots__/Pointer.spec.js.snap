@@ -1,0 +1,66 @@
+exports[`Pointer with children for custom component 1`] = `
+<g>
+  <Test
+    angle={0}
+    center={50}
+    radius={100}
+    transform="someTransformation">
+    <Test />
+  </Test>
+</g>
+`;
+
+exports[`Pointer with children of type circle 1`] = `
+<g>
+  <circle
+    cx={0}
+    cy={10}
+    r={10}
+    transform="rotate(0 50 50) translate(50 -50) " />
+</g>
+`;
+
+exports[`Pointer with children of type ellipse 1`] = `
+<g>
+  <ellipse
+    cx={0}
+    cy={10}
+    rx={10}
+    ry={10}
+    transform="rotate(0 50 50) translate(50 -50) " />
+</g>
+`;
+
+exports[`Pointer with children of type rect 1`] = `
+<g>
+  <rect
+    height={10}
+    transform="rotate(0 50 50) translate(50 -50) "
+    width={10}
+    x={-5}
+    y={0} />
+</g>
+`;
+
+exports[`Pointer without children use the type prop to render the pointer 1`] = `
+<rect
+  fill={undefined}
+  filter={undefined}
+  height={10}
+  style={undefined}
+  transform="someTransformation"
+  width={10}
+  x={-5}
+  y={0} />
+`;
+
+exports[`Pointer without children without type prop renders a circle by default 1`] = `
+<circle
+  cx={0}
+  cy={10}
+  fill={undefined}
+  filter={undefined}
+  r={10}
+  style={undefined}
+  transform="someTransformation" />
+`;
